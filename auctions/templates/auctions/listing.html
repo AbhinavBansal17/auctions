@@ -1,0 +1,66 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+
+
+    <div class="media-body">
+        <div class="article-metadata">
+            <img src="{{listing.image}}" width="700" height="300">
+            <p>{{listing.description}}</p>
+            {% if listing.is_active == True %}
+                <h3><strong>${{listing.starting_bid}}</strong></h3>
+            {% if message %}
+                <div>{{ message }}</div>
+            {% endif %}
+    <h2>Listing: {{listing.title}}</h2>
+            <a href="/add_to_watchlist/{{listing.title}}" class="btn btn-outline-primary">Add to Watchlist</a>
+
+                <p>Your bid is the current bid.</p>
+                <p>Current Highest Bid: {% if bid == 0 %}No bids yet for this item. {% else %} ${{listing.bid}} by {{listing.bid.bidder}}{% endif %}</p>
+                <form action="/bid/{{listing.title}}" method="post">
+                    {% csrf_token %}
+                    <div class="form-group">xbox
+                        <input class="form-control" autofocus type="text" name="bid" placeholder="Bid">
+                    </div>
+                    <input class="btn btn-primary" type="submit" value="Bid">
+                </form>
+            {% else %}
+            <hr>
+                <p>Auction has been closed.</p>
+            <h3><strong>This auction has been won by {{listing.bid.bidder}}</strong></h3>
+            <P><strong>Won for ${{listing.bid}}.</strong></P>
+            <hr>
+            {% endif %}
+            <h2>Details:</h2>
+            <ul>
+                <li>Listed by: {{listing.author}}</li>
+                <li>Category: {{listing.category}}</li>
+            </ul>
+            {% if user.username == listing.author %}
+            {% if listing.is_active == True %}
+                <a href="/close/{{listing.title}}" class="btn btn-primary">Close Auction</a>
+            {% else %}
+            {% endif %}
+            {% endif %}
+        </div>
+        <h2>Comments:</h2>
+        <form action="/comment/{{listing.title}}" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <input class="form-control" autofocus type="text" name="comment" placeholder="Your Comment">
+            </div>
+            <input class="btn btn-primary" type="submit" value="Add Comment">
+        </form>
+        {% for comment in comments %}
+            <article class="media content-section" xmlns="http://www.w3.org/1999/html">
+                <div class="media-body">
+                    <div class="article-metadata">
+                        <p>Posted by: <strong>{{comment.author}}</strong></p>
+                        <p>{{comment.comment}}</p>
+                    </div>
+                </div>
+            </article>
+        {% endfor %}
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+    <h2>Categories</h2>
+
+
+    <div class="media-body">
+        <div class="article-metadata">
+            <p>Click on a category to see active listings in that area.</p>
+            <ul>
+                <li><a href="/category/Toys">Toys</a></li>
+                <li><a href="/category/Fashion">Fashion</a></li>
+                <li><a href="/category/Electronics">Electronics</a></li>
+                <li><a href="/category/Furniture">Furniture</a></li>
+                <li><a href="/category/Clothing">Clothing</a></li>
+                <li><a href="/category/Kitchenware">Kitchenware</a></li>
+                <li><a href="/category/Equipment">Equipment</a></li>
+            </ul>
+        </div>
+    </div>
+
+
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "auctions/layout.html" %}
+{% block body %}
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+    <h2>Watchlist({{items}})</h2>
+
+    {% for listing in listings %}
+            <article class="media content-section" xmlns="http://www.w3.org/1999/html">
+                <div class="media-body">
+                    <div class="article-metadata">
+                        <p>{{listing.listing_name}}</p>
+                        <a href="/listing/{{listing.listing_name}}">View Listing</a>
+                    </div>
+                </div>
+                <a href="/remove_from_watchlist/{{listing.listing_name}}">Remove from Watchlist</a>
+            </article>
+    {% empty %}
+    <P>No listing yet for this section.</P>
+    {% endfor %}
+{% endblock %}
